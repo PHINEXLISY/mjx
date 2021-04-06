@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>随机买家秀</title>
+    <meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" name="viewport"/>
+    <meta content="yes" name="apple-mobile-web-app-capable"/>
+    <meta content="black" name="apple-mobile-web-app-status-bar-style"/>
+    <meta content="telephone=no" name="format-detection"/>
+    <link rel="stylesheet" href="css/ydui.css"/>
+    <link rel="stylesheet" href="css/app.css">
+    <script src="js/layout.js"></script>
+</head>
+<body>
+<header class="m-navbar navbar-fixed">
+    <div class="navbar-center"><span class="navbar-title">随机买家秀</span></div>
+</header>
+<div class="g-view" id="main"></div>
+<script src="js/jquery.js"></script>
+<script src="js/jquery.qrcode.min.js"></script>
+<script src="js/fancyBox.js"></script>
+<script src="js/ydui.js"></script>
+<script>"use strict";
+$(function () {
+    var b = $("#main");
+    /*if (!YDUI.device.isMobile) {
+        return a()
+    }*/
+    var c = function () {
+        var f = YDUI.dialog;
+        var e, h = false;
+        this.init = function () {
+            g();
+            var l = $(document).height(), k = $(window).height(), m = $(window).scrollTop();
+            $(window).scroll(function () {
+                m = $(window).scrollTop();
+                l = $(document).height();
+                if (m + k + 100 > l) {
+                    if (!h) {
+                        j(10)
+                    }
+                }
+            });
+            b.find("img").error(function () {
+                this.src = "images/error.png"
+            })
+        };
+
+        function g() {
+            e = $('<div class="image-list m-grids-3"></div>');
+            b.append(e);
+            j(10)
+        }
+
+        function d(k) {
+            f.toast(k, "none", 15000)
+        }
+
+        function j(k) {
+            h = true;
+            for (let i = 1; i <= k; i++) {
+                $.get("api.php", function (l) {
+                    if (l.code == 1) {
+                        e.append('<a data-fancybox="image" href="' + l.imgurl + '" class="grids-item"><img class="lazyload" src="' + l.imgurl + '" alt=""></a>')
+                    }
+                    if (i >= k) {
+                        h = false
+                    }
+                }, "json")
+            }
+        }
+    };
+    (new c()).init();
+   /* function a() {
+        var d = $("<div></div>");
+        d.qrcode({width: 150, height: 150, text: window.location.href});
+        d.css({"margin-top": "20px"});
+        b.text("请使用手机访问该页面");
+        b.css({"font-size": "20px", "text-align": "center"});
+        b.append(d);
+        return alert("请使用手机访问该页面")
+    }*/
+});</script>
+</body>
+</html>
